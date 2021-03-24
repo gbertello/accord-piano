@@ -1,4 +1,4 @@
 .DS_Store
 diapason.wav
-cache.json
+cache.json*
 __pycache__
