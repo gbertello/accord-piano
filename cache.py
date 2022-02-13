@@ -1,6 +1,6 @@
 import os
 import json
-from pitches import get_pitch_index
+from pitches import *
 
 def load_cache():
   cache = {}
@@ -26,12 +26,13 @@ def load_cache():
   return cache
 
 def show_cache(cache):
+  print("Number of harmonics: %s" % cache["n_harmonics"])
+  print("Figure width: %s" % cache["fig_width"])
   print("Duration: %s" % cache["duration"])
   print("Pitch: %s" % cache["pitch"])
   print("Zoom: %s" % cache["zoom"])
   print("Inharmonicity: %s" % cache["inharmonicity"])
   print("Inharmonicity ratio: %s" % cache["inharmonicity_ratio"])
-  print("Inharmonicity progress factor: %s" % cache["inharmonicity_progress_factor"])
 
 def show_cache_harmonics(cache, pitches):
   print("Harmonics:")
@@ -59,6 +60,10 @@ def is_pitch_string(val, pitches):
     return False
 
 def store_pitch_in_cache(cache, val, pitches):
+  if val == "+":
+    val = get_next_pitch(cache['pitch'], pitches)
+  elif val == "-":
+    val = get_previous_pitch(cache['pitch'], pitches)
   if not is_pitch_string(val, pitches):
     print("pitch should be a pitch string (e.g. \"LA4\")")
     return

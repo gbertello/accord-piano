@@ -3,6 +3,9 @@
 # I = 1200 * (math.log2(880.9) - math.log2(880)) / 3
 # q = (0.59 / 0.446) ^ (1/12)
 
+def get_pure_frequency(p, n):
+  return 440 * (2 ** ((p - 49) / 12)) * n
+
 # Model 1: on 1st partial
 def get_corrected_frequency_1(p, I, q):
   corrected_frequency = 440
