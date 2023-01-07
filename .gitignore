@@ -1,4 +1,8 @@
 .DS_Store
 diapason.wav
 cache.json*
+build/
+dist/
+venv/
+.eggs/
 __pycache__
