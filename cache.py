@@ -23,7 +23,12 @@ def load_cache():
     cache["inharmonicity"] = 0
   if "inharmonicity_ratio" not in cache.keys():
     cache["inharmonicity_ratio"] = 1
+
   return cache
+
+def save_cache(cache):
+  with open('cache.json', 'w') as f:
+    f.write(json.dumps(cache, indent=2))
 
 def show_cache(cache):
   print("Number of harmonics: %s" % cache["n_harmonics"])
@@ -130,8 +135,5 @@ def delete_harmonic_in_cache(cache, val, pitches):
     print("harmonic %s deleted" % pitch)
 
 def delete_all_harmonics_in_cache(cache):
-  print("Are you sure to delete cache harmonics? (y/N)")
-  confirm = input()
-  if confirm.lower() == "y":
-    cache["harmonics"] = {}
-    print("cache erased")
+  cache["harmonics"] = {}
+  save_cache(cache)
