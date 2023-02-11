@@ -1,27 +1,10 @@
 from tkinter import *
 import sounddevice as sd
-from cache import save_cache
 
 class SettingsWindow:
   def __init__(self, cache):
     self.cache = cache
-
     self.devices = [d['name'] for d in sd.query_devices()]
-    if len(self.devices) == 0:
-      print("No sound device exists")
-      exit()
-
-    if "device" not in self.cache or self.cache["device"] not in self.devices: self.cache["device"] = self.devices[0]
-    if self.cache["device"] not in self.devices: self.cache["device"] = self.devices[0]
-    if "samplerate" not in self.cache: self.cache["samplerate"] = 192000
-    if "channels" not in self.cache: self.cache["channels"] = 1
-    if "interval" not in self.cache: self.cache["interval"] = 30
-    if "duration" not in self.cache: self.cache["duration"] = 5
-    if "zoom" not in self.cache: self.cache["zoom"] = 0.05
-    if "n_harmonics" not in self.cache: self.cache["n_harmonics"] = 6
-    if "fig_width" not in self.cache: self.cache["fig_width"] = 3
-    if "inharmonicity" not in self.cache: self.cache["inharmonicity"] = 0.58
-    if "inharmonicity_ratio" not in self.cache: self.cache["inharmonicity_ratio"] = 1.09
 
     self.settings_window = Toplevel()
     self.settings_window.title('Settings')
@@ -33,7 +16,7 @@ class SettingsWindow:
     self.device_label.pack()
 
     self.device = StringVar()
-    self.device.set(self.cache["device"])
+    self.device.set(self.cache.get("device"))
     self.device_list = OptionMenu(self.settings_window, self.device, *self.devices)
     self.device_list.pack()
 
@@ -43,7 +26,7 @@ class SettingsWindow:
     self.samplerate_label.pack()
 
     self.samplerate_entry = Entry(self.settings_window)
-    self.samplerate_entry.insert(0, self.cache["samplerate"])
+    self.samplerate_entry.insert(0, self.cache.get("samplerate"))
     self.samplerate_entry.pack()
 
     self.channels_label_var = StringVar()
@@ -52,7 +35,7 @@ class SettingsWindow:
     self.channels_label.pack()
 
     self.channels_entry = Entry(self.settings_window)
-    self.channels_entry.insert(0, self.cache["channels"])
+    self.channels_entry.insert(0, self.cache.get("channels"))
     self.channels_entry.pack()
 
     self.interval_label_var = StringVar()
@@ -61,7 +44,7 @@ class SettingsWindow:
     self.interval_label.pack()
 
     self.interval_entry = Entry(self.settings_window)
-    self.interval_entry.insert(0, self.cache["interval"])
+    self.interval_entry.insert(0, self.cache.get("interval"))
     self.interval_entry.pack()
 
     self.duration_label_var = StringVar()
@@ -70,7 +53,7 @@ class SettingsWindow:
     self.duration_label.pack()
 
     self.duration_entry = Entry(self.settings_window)
-    self.duration_entry.insert(0, self.cache["duration"])
+    self.duration_entry.insert(0, self.cache.get("duration"))
     self.duration_entry.pack()
 
     self.zoom_label_var = StringVar()
@@ -79,7 +62,7 @@ class SettingsWindow:
     self.zoom_label.pack()
 
     self.zoom_entry = Entry(self.settings_window)
-    self.zoom_entry.insert(0, self.cache["zoom"])
+    self.zoom_entry.insert(0, self.cache.get("zoom"))
     self.zoom_entry.pack()
 
     self.n_harmonics_label_var = StringVar()
@@ -88,7 +71,7 @@ class SettingsWindow:
     self.n_harmonics_label.pack()
 
     self.n_harmonics_entry = Entry(self.settings_window)
-    self.n_harmonics_entry.insert(0, self.cache["n_harmonics"])
+    self.n_harmonics_entry.insert(0, self.cache.get("n_harmonics"))
     self.n_harmonics_entry.pack()
 
     self.fig_width_label_var = StringVar()
@@ -97,7 +80,7 @@ class SettingsWindow:
     self.fig_width_label.pack()
 
     self.fig_width_entry = Entry(self.settings_window)
-    self.fig_width_entry.insert(0, self.cache["fig_width"])
+    self.fig_width_entry.insert(0, self.cache.get("fig_width"))
     self.fig_width_entry.pack()
 
     self.inharmonicity_label_var = StringVar()
@@ -106,7 +89,7 @@ class SettingsWindow:
     self.inharmonicity_label.pack()
 
     self.inharmonicity_entry = Entry(self.settings_window)
-    self.inharmonicity_entry.insert(0, self.cache["inharmonicity"])
+    self.inharmonicity_entry.insert(0, self.cache.get("inharmonicity"))
     self.inharmonicity_entry.pack()
 
     self.inharmonicity_ratio_label_var = StringVar()
@@ -115,7 +98,7 @@ class SettingsWindow:
     self.inharmonicity_ratio_label.pack()
 
     self.inharmonicity_ratio_entry = Entry(self.settings_window)
-    self.inharmonicity_ratio_entry.insert(0, self.cache["inharmonicity_ratio"])
+    self.inharmonicity_ratio_entry.insert(0, self.cache.get("inharmonicity_ratio"))
     self.inharmonicity_ratio_entry.pack()
 
     cancel_button = Button(self.settings_window, text="Cancel", command=self.settings_window.destroy)
@@ -125,17 +108,16 @@ class SettingsWindow:
     ok_button.pack()
 
   def update(self):
-    self.cache["device"] = self.device.get()
-    self.cache["samplerate"] = float(self.samplerate_entry.get())
-    self.cache["channels"] = int(self.channels_entry.get())
-    self.cache["interval"] = int(self.interval_entry.get())
-    self.cache["duration"] = float(self.duration_entry.get())
-    self.cache["zoom"] = float(self.zoom_entry.get())
-    self.cache["n_harmonics"] = int(self.n_harmonics_entry.get())
-    self.cache["fig_width"] = int(self.fig_width_entry.get())
-    self.cache["inharmonicity"] = float(self.inharmonicity_entry.get())
-    self.cache["inharmonicity_ratio"] = float(self.inharmonicity_ratio_entry.get())
-
-    save_cache(self.cache)
+    self.cache.set("device", self.device.get())
+    self.cache.set("samplerate", float(self.samplerate_entry.get()))
+    self.cache.set("channels", int(self.channels_entry.get()))
+    self.cache.set("interval", int(self.interval_entry.get()))
+    self.cache.set("duration", float(self.duration_entry.get()))
+    self.cache.set("zoom", float(self.zoom_entry.get()))
+    self.cache.set("n_harmonics", int(self.n_harmonics_entry.get()))
+    self.cache.set("fig_width", int(self.fig_width_entry.get()))
+    self.cache.set("inharmonicity", float(self.inharmonicity_entry.get()))
+    self.cache.set("inharmonicity_ratio", float(self.inharmonicity_ratio_entry.get()))
+    self.cache.save()
 
     self.settings_window.destroy()

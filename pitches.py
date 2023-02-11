@@ -1,24 +1,26 @@
 import json
 
-from sounddevice import default
+class Pitches():
+  def __init__(self):
+    self.pitches = json.loads(open("pitches.txt").read())
 
-def load_pitches():
-  return json.loads(open("pitches.txt").read())
+  def values(self):
+    return self.pitches.values()
 
-def get_pitch_index(val, pitches):
-  for k, v in pitches.items():
-    if v == val:
-      return int(k)
-  return None
+  def get_pitch_index(self, val):
+    for k, v in self.pitches.items():
+      if v == val:
+        return int(k)
+    return None
 
-def get_next_pitch(val, pitches):
-  i = get_pitch_index(val, pitches)
-  if i is not None and i < len(pitches):
-    i += 1
-  return pitches[str(i)]
+  def get_next_pitch(self, val):
+    i = self.get_pitch_index(val)
+    if i is not None and i < len(self.pitches):
+      i += 1
+    return self.pitches[str(i)]
 
-def get_previous_pitch(val, pitches):
-  i = get_pitch_index(val, pitches)
-  if i is not None and i > 0:
-    i -= 1
-  return pitches[str(i)]
+  def get_previous_pitch(self, val):
+    i = self.get_pitch_index(val)
+    if i is not None and i > 0:
+      i -= 1
+    return self.pitches[str(i)]
