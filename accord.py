@@ -24,10 +24,16 @@ class Window(Tk):
     self.settings_button = Button(self.window, text ="Settings", command = lambda: self.settings_callback())
     self.settings_button.pack()
 
+    self.previous_pitch_button = Button(self.window, text ="<--", command = lambda: self.previous_pitch_callback())
+    self.previous_pitch_button.pack()
+
     self.pitch_var = StringVar()
     self.pitch_var.set(self.cache.get("pitch"))
     self.pitches_list = OptionMenu(self.window, self.pitch_var, *[v for v in self.pitches.values()], command = lambda e: self.pitch_callback())
     self.pitches_list.pack()
+
+    self.next_pitch_button = Button(self.window, text ="-->", command = lambda: self.next_pitch_callback())
+    self.next_pitch_button.pack()
 
     canvas = FigureCanvasTkAgg(self.fig, master=self.window)
     canvas.get_tk_widget().pack()
@@ -69,6 +75,14 @@ class Window(Tk):
     self.cache.set("pitch", self.pitch_var.get())
     self.cache.save()
     self.reset()
+
+  def previous_pitch_callback(self):
+    self.pitch_var.set(self.pitches.get_previous_pitch(self.cache.get("pitch")))
+    self.pitch_callback()
+
+  def next_pitch_callback(self):
+    self.pitch_var.set(self.pitches.get_next_pitch(self.cache.get("pitch")))
+    self.pitch_callback()
 
   def start_callback(self):
     self.context.stream.start()
