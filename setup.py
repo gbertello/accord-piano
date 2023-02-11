@@ -7,7 +7,7 @@ Usage:
 
 from setuptools import setup
 
-APP = ['ui.py']
+APP = ['accord.py']
 DATA_FILES = []
 OPTIONS = {}
 
