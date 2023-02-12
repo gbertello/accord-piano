@@ -13,6 +13,9 @@ class Pitches():
         return int(k)
     return None
 
+  def get_pitch_value(self, key):
+    return self.pitches[key]
+
   def get_next_pitch(self, val):
     i = self.get_pitch_index(val)
     if i is not None and i < len(self.pitches):

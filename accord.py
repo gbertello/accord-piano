@@ -85,6 +85,7 @@ class Window(Tk):
     self.pitch_callback()
 
   def start_callback(self):
+    self.reset()
     self.context.stream.start()
 
   def stop_callback(self):

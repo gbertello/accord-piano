@@ -21,7 +21,7 @@ class Cache():
     if "samplerate" not in self.cache.keys():
       self.set("samplerate", 192000)
     if "duration" not in self.cache.keys():
-      self.set("duration", 20)
+      self.set("duration", 5)
     if "zoom" not in self.cache.keys():
       self.set("zoom", 0.0561)
     if "pitch" not in self.cache.keys():

@@ -9,7 +9,7 @@ class Context():
     self.p = self.pitches.get_pitch_index(self.cache.get("pitch"))
     self.fig = fig
     for n in range(0, self.cache.get("n_harmonics")):
-      self.fig.add_subplot(self.cache.get("n_harmonics") // self.cache.get("fig_width"), self.cache.get("fig_width"), n + 1)
+      self.fig.add_subplot((self.cache.get("n_harmonics") - 1) // self.cache.get("fig_width") + 1, self.cache.get("fig_width"), n + 1)
     self.axs = self.fig.axes
     self.lines = []
     self.vertical_lines = []
