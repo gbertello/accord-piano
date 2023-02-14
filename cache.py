@@ -5,6 +5,9 @@ import sounddevice as sd
 class Cache():
   def __init__(self):
     self.cache = {}
+    self.reset()
+
+  def reset(self):
     if os.path.exists("cache.json"):
       with open("cache.json") as f:
         self.cache = json.loads(f.read())

@@ -1,31 +1,24 @@
-import sounddevice as sd
-import numpy as np
+import matplotlib.pyplot as plt
 from model import *
+import numpy as np
 
-class Context():
-  def __init__(self, cache, pitches, fig):
-    self.cache = cache
+class Figure(plt.Figure):
+  def __init__(self, pitches, cache, stream):
     self.pitches = pitches
-    self.p = self.pitches.get_pitch_index(self.cache.get("pitch"))
-    self.fig = fig
-    for n in range(0, self.cache.get("n_harmonics")):
-      self.fig.add_subplot((self.cache.get("n_harmonics") - 1) // self.cache.get("fig_width") + 1, self.cache.get("fig_width"), n + 1)
-    self.axs = self.fig.axes
+    self.cache = cache
+    self.stream = stream
+    super().__init__(figsize = (14, 6))
+    self.reset()
+
+  def reset(self):
+    self.clear()
     self.lines = []
     self.vertical_lines = []
-    self.y = np.zeros(int(self.cache.get("duration") * self.cache.get("samplerate")))
-    if "stream" in dir(self) is not None and self.stream.active:
-      self.stream.stop()
-    self.stream = sd.InputStream(device=self.cache.get("device"), channels=self.cache.get("channels"), samplerate=self.cache.get("samplerate"), callback=lambda indata, *args: self.audio_callback(indata))
-    self.init_graphs()
+    for n in range(0, self.cache.get("n_harmonics")):
+      self.add_subplot((self.cache.get("n_harmonics") - 1) // self.cache.get("fig_width") + 1, self.cache.get("fig_width"), n + 1)
+    self.axs = self.axes
 
-  def audio_callback(self, indata):
-    data = indata[:]
-    shift = len(data)
-    self.y = np.roll(self.y, -shift, axis=0)
-    self.y[-shift:] = data.reshape((shift))
-
-  def init_graphs(self):
+    self.p = self.pitches.get_pitch_index(self.cache.get("pitch"))
     for n in range(0, self.cache.get("n_harmonics")):
       line, = self.axs[n].plot([], [], lw=1)
       self.lines.append(line)
@@ -63,7 +56,7 @@ class Context():
           self.axs[n].axvline(x=harmonics[str(self.p - interval)][m], color=color, lw=0.9)
 
   def plot_callback(self):
-    yf = np.absolute(np.fft.fft(self.y))
+    yf = np.absolute(np.fft.fft(self.stream.y))
     xf = np.arange(yf.size)*1.0/yf.size*self.cache.get("samplerate")
 
     yf = yf[:int(yf.size/2)]
@@ -72,12 +65,14 @@ class Context():
     harmonics = self.cache.get('harmonics')
     harmonics[str(self.p)] = [0] * self.cache.get("n_harmonics")
 
+    pure_frequency = get_pure_frequency(self.p, 1)
+
     for n in range(0, self.cache.get("n_harmonics")):
       corrected_frequency = get_corrected_frequency_2(self.p, self.cache.get("inharmonicity"), self.cache.get("inharmonicity_ratio"))
       f = corrected_frequency * (n + 1) * (2 ** ((((n + 1) ** 2 - 1) * self.cache.get("inharmonicity") * (self.cache.get("inharmonicity_ratio") ** (self.p - 49))) / 1200))
 
-      center = xf.size/(self.cache.get("samplerate")/2)*f
-      delta = self.cache.get("zoom")*center
+      center = f*xf.size/(self.cache.get("samplerate")/2)
+      delta = self.cache.get("zoom")*pure_frequency*xf.size/(self.cache.get("samplerate")/2)
 
       xf_zoom = xf[int(center - delta):int(center + delta)]
       yf_zoom = yf[int(center - delta):int(center + delta)]
