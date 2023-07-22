@@ -3,6 +3,6 @@ diapason.wav
 cache.json*
 build/
 dist/
-venv/
+.venv/
 .eggs/
 __pycache__
