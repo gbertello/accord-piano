@@ -47,7 +47,7 @@ class Window(Tk):
 
   def reset(self):
     self.cache.reset()
-    self.stream.reset()
+    self.stream.__init__(self.cache.get("duration"), self.cache.get("samplerate"), self.cache.get("device"), self.cache.get("channels"))
     self.figure.reset()
 
   def settings_callback(self):

@@ -26,7 +26,7 @@ class Cache():
     if "duration" not in self.cache.keys():
       self.set("duration", 5)
     if "zoom" not in self.cache.keys():
-      self.set("zoom", 0.0561)
+      self.set("zoom", 0.08)
     if "pitch" not in self.cache.keys():
       self.set("pitch", "LA4")
     if "harmonics" not in self.cache.keys():

@@ -17,7 +17,7 @@ class Figure(plt.Figure):
     for n in range(0, self.cache.get("n_harmonics")):
       self.add_subplot((self.cache.get("n_harmonics") - 1) // self.cache.get("fig_width") + 1, self.cache.get("fig_width"), n + 1)
     self.axs = self.axes
-
+    
     self.p = self.pitches.get_pitch_index(self.cache.get("pitch"))
     for n in range(0, self.cache.get("n_harmonics")):
       line, = self.axs[n].plot([], [], lw=1)
@@ -35,11 +35,11 @@ class Figure(plt.Figure):
       if str(self.p) in harmonics and len(harmonics[str(self.p)]) > 0:
         self.print_vertical_line(n, 1, 1, 0, "brown")
 
-      self.print_vertical_line(n, 2, 1, 12, "red")
-      self.print_vertical_line(n, 3, 2, 7,  "green")
-      self.print_vertical_line(n, 4, 3, 5,  "purple")
-      self.print_vertical_line(n, 5, 4, 4,  "blue")
-      self.print_vertical_line(n, 5, 3, 9,  "pink")
+      self.print_vertical_line(n, 2, 1, 12, "red")    # Octave
+      self.print_vertical_line(n, 3, 2, 7,  "green")  # 5th
+      self.print_vertical_line(n, 4, 3, 5,  "purple") # 4th
+      self.print_vertical_line(n, 5, 4, 4,  "blue")   # 3rd
+      #self.print_vertical_line(n, 5, 3, 9,  "pink")   # 6th
 
   def print_vertical_line(self, n, a, b, interval, color):
     harmonics = self.cache.get('harmonics')
