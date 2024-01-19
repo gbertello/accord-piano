@@ -6,7 +6,7 @@ import os
 import matplotlib.pyplot as plt
 from scipy.io import wavfile
 
-dirname = "Sons/"
+dirname = "inharmonicite/sons/"
 
 for p in range(1, 89):
   filename = [name for name in os.listdir(dirname) if name.startswith(str(p).zfill(2))][0]

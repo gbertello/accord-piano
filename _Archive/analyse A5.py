@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from scipy.io import wavfile
 
 p = 61
-samplerate, y = wavfile.read('Sons/61 - A5.wav')
+samplerate, y = wavfile.read('inharmonicite/sons/61 - A5.wav')
 y = y[:, 0]
 
 yf = np.absolute(np.fft.fft(y))

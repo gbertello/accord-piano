@@ -24,11 +24,8 @@ class Figure(plt.Figure):
       self.lines.append(line)
       self.vertical_lines.append(self.axs[n].axvline(x=0, color="black", lw=0.9))
 
-      pure_frequency = get_pure_frequency(self.p, n + 1)
-      corrected_frequency = get_corrected_frequency_2(self.p, self.cache.get("inharmonicity"), self.cache.get("inharmonicity_ratio"))
-      f = corrected_frequency * (n + 1) * (2 ** ((((n + 1) ** 2 - 1) * self.cache.get("inharmonicity") * (self.cache.get("inharmonicity_ratio") ** (self.p - 49))) / 1200))
+      f = get_freq(self.p, n + 1)
 
-      self.axs[n].axvline(x=pure_frequency, color="orange", lw=0.9, linestyle='--')
       self.axs[n].axvline(x=f, color="orange", lw=0.9)
 
       harmonics = self.cache.get("harmonics")
@@ -39,7 +36,6 @@ class Figure(plt.Figure):
       self.print_vertical_line(n, 3, 2, 7,  "green")  # 5th
       self.print_vertical_line(n, 4, 3, 5,  "purple") # 4th
       self.print_vertical_line(n, 5, 4, 4,  "blue")   # 3rd
-      #self.print_vertical_line(n, 5, 3, 9,  "pink")   # 6th
 
   def print_vertical_line(self, n, a, b, interval, color):
     harmonics = self.cache.get('harmonics')
@@ -68,11 +64,10 @@ class Figure(plt.Figure):
     pure_frequency = get_pure_frequency(self.p, 1)
 
     for n in range(0, self.cache.get("n_harmonics")):
-      corrected_frequency = get_corrected_frequency_2(self.p, self.cache.get("inharmonicity"), self.cache.get("inharmonicity_ratio"))
-      f = corrected_frequency * (n + 1) * (2 ** ((((n + 1) ** 2 - 1) * self.cache.get("inharmonicity") * (self.cache.get("inharmonicity_ratio") ** (self.p - 49))) / 1200))
+      f = get_freq(self.p, n + 1)
 
-      center = f*xf.size/(self.cache.get("samplerate")/2)
-      delta = self.cache.get("zoom")*pure_frequency*xf.size/(self.cache.get("samplerate")/2)
+      center = f * xf.size / (self.cache.get("samplerate") / 2)
+      delta = self.cache.get("zoom") * pure_frequency * xf.size / (self.cache.get("samplerate") / 2)
 
       xf_zoom = xf[int(center - delta):int(center + delta)]
       yf_zoom = yf[int(center - delta):int(center + delta)]
