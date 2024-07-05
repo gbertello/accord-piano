@@ -68,15 +68,15 @@ class Figure(plt.Figure):
 
       center = f * xf.size / (self.cache.get("samplerate") / 2)
       delta = self.cache.get("zoom") * pure_frequency * xf.size / (self.cache.get("samplerate") / 2)
-
+      
       xf_zoom = xf[int(center - delta):int(center + delta)]
       yf_zoom = yf[int(center - delta):int(center + delta)]
-
+      
       harmonics[str(self.p)][n] = round(xf_zoom[np.argmax(yf_zoom)], 2)
 
       self.lines[n].set_data(xf_zoom, yf_zoom)
-      self.vertical_lines[n].set_xdata(harmonics[str(self.p)][n])
-
+      #self.vertical_lines[n].set_xdata(harmonics[str(self.p)][n])
+      
       self.axs[n].set_xlim([(center - delta) * (self.cache.get("samplerate") / 2) / xf.size, (center + delta) * (self.cache.get("samplerate") / 2) / xf.size])
       if len(yf_zoom) > 0:
         self.axs[n].set_ylim([0, max(np.amax(yf_zoom)*1.1, 1)])
