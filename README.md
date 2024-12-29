@@ -2,7 +2,7 @@
 
 ## Package manager
 
-I have coded this program on a Mac OS environment. You will find detailed instructions for a Mac OS platform. As a first step, install brew as a package manager.
+This program has been coded on a Mac OS environment. You will find detailed instructions for a Mac OS platform. As a first step, install brew as a package manager.
 ```
 https://brew.sh/
 ```
