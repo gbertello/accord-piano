@@ -108,6 +108,10 @@ http://www.temperamentcordier.org/inharmonicite/Memoireinharmonicite%20.pdf
 
 Mathematical works have been filed in the folder called "Inharmonicite". It consists of a series of mathematical operations based on a pre-recorded of piano string samples in isolation. For a pitch with multiple strings, only 1 string has been recorded (for example 1 string out of 3 on A4).
 
+The articles used for this computation are the following:
+- https://fr.wikipedia.org/wiki/Inharmonicit%C3%A9
+- http://www.temperamentcordier.org/inharmonicite/Memoireinharmonicite%20.pdf
+
 ## Get harmonics
 This function returns the harmonics of the recorded sounds
 
@@ -115,8 +119,6 @@ This function returns the harmonics of the recorded sounds
 This function estimates the stiffness of the recorded sounds. It is based on the formula 
 
 $$fn = n \sqrt{1 + B n^2} f0$$ 
-
-Reference documentation can be found in this page: https://fr.wikipedia.org/wiki/Inharmonicit%C3%A9
 
 For 2 partials p and k, the following formula can be used to estimate the stiffness B:
 
