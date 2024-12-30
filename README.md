@@ -118,9 +118,11 @@ $$fn = n \sqrt{1 + B n^2} f0$$
 
 Reference documentation can be found in this page: https://fr.wikipedia.org/wiki/Inharmonicit%C3%A9
 
-For 2 partials n and p, the following formula can be used to estimate the stiffness B:
+For 2 partials p and k, the following formula can be used to estimate the stiffness B:
 
-$$B = \frac{n^2f_p^2 - p^2f_n^2}{p^4f_n^2 - n^2f_p^2}$$
+$$B_{k, p} = \frac{p^2f_k^2 - k^2f_p^2}{k^4f_p^2 - p^2f_k^2}$$
+
+All combinations of (k, p) have been estimated for a given pitch, and the stiffness returned is the mean of all computations.
 
 ## Model stiffness
 This function models the stiffness based on a polynomial assumption (degree 4)
@@ -131,5 +133,21 @@ This function estimates the error between the estimated stiffness by model and t
 ## Find inharmonicity
 This function estimated the inharmonicity factor for the A4 string. It correspond to the Inharmonicity setting of the settings window
 
+It is based on the formula:
+
+$$f_2(n) = 2f_1(n)2^{\frac{3I}{1200}}$$
+
+which gives:
+
+$$I = 200 log_2{\frac{1 + 4B_n}{1 + B_n}}$$
+
 ## Find inharmonicity ratio
 This function estimated the inharmonicity ratio for the entire piano. It correspond to the Inharmonicity Ratio setting of the settings window
+
+It is based on the formula:
+
+$$f_2(n) = 2f_1(n)2^{\frac{3Iq^n}{1200}}$$
+
+Dividing stiffness for adjacent pitches gives:
+
+$$q = \frac{log_2{\frac{1 + 4B_{n+1}}{1 + B_{n+1}}}}{log_2{\frac{1 + 4B_{n}}{1 + B_{n}}}}$$
