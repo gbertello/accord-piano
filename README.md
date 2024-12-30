@@ -118,6 +118,10 @@ $$fn = n \sqrt{1 + B n^2} f0$$
 
 Reference documentation can be found in this page: https://fr.wikipedia.org/wiki/Inharmonicit%C3%A9
 
+For 2 partials n and p, the following formula can be used to estimate the stiffness B:
+
+$$B = \frac{n^2f_p^2 - p^2f_n^2}{p^4f_n^2 - n^2f_p^2}$$
+
 ## Model stiffness
 This function models the stiffness based on a polynomial assumption (degree 4)
 
