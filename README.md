@@ -112,7 +112,7 @@ Mathematical works have been filed in the folder called "Inharmonicite". It cons
 This function returns the harmonics of the recorded sounds
 
 ## Get stiffness
-This function estimates the stiffness of the recorded sounds. It is based on the formula $fn = n * sqrt(1 + B * n^2) * f0$ explained in this page: https://fr.wikipedia.org/wiki/Inharmonicit%C3%A9
+This function estimates the stiffness of the recorded sounds. It is based on the formula $fn = n * \sqrt(1 + B * n^2) * f0$ explained in this page: https://fr.wikipedia.org/wiki/Inharmonicit%C3%A9
 
 ## Model stiffness
 This function models the stiffness based on a polynomial assumption (degree 4)
